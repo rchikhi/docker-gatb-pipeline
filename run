@@ -33,4 +33,4 @@ if [[ -z ${CMD} ]]; then
 fi
 eval ${CMD}
 
-cp genome.besst.scaffolds.fa $ASSEMBLY
+cp assembly.besst.scaffolds.fasta $ASSEMBLY
