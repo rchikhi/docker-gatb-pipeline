@@ -33,4 +33,4 @@ if [[ -z ${CMD} ]]; then
 fi
 eval ${CMD}
 
-cp assembly.besst.scaffolds.fasta $ASSEMBLY
+cp assembly.fasta $ASSEMBLY
