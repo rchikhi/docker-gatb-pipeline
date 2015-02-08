@@ -33,4 +33,4 @@ if [[ -z ${CMD} ]]; then
 fi
 eval ${CMD}
 
-cp assembly.fasta $ASSEMBLY
+cp genome.fasta $ASSEMBLY
