@@ -1,0 +1,8 @@
+#!/bin/bash
+echo
+echo "#####################################################################"
+echo " Running default example..."
+echo "  /usr/local/bin/gatb -p /usr/local/bin/test/small_test_reads.fa.gz"
+echo "#####################################################################"
+echo
+/usr/local/bin/gatb -p /usr/local/bin/test/small_test_reads.fa.gz

@@ -1,0 +1,8 @@
+#!/bin/bash
+echo
+echo "#####################################################################"
+echo " Running Low_Complexity_Test_Dataset task..."
+echo "  /usr/local/bin/gatb -u /dckr/mnt/input/S_S001__genomes_30__insert_180_reads_anonymous.fq.gz --multik"
+echo "#####################################################################"
+echo
+/usr/local/bin/gatb -u /dckr/mnt/input/S_S001__genomes_30__insert_180_reads_anonymous.fq.gz --multik
