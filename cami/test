@@ -5,4 +5,10 @@ echo " Running default example..."
 echo "  /usr/local/bin/gatb -p /usr/local/bin/test/small_test_reads.fa.gz"
 echo "#####################################################################"
 echo
+echo "pwd=> `pwd`"
+SCRATCH=/dckr/mnt/output/scratchdir
+mkdir -p $SCRATCH
+cd $SCRATCH && rm -rf *
+echo "pwd=> `pwd`"
+echo
 /usr/local/bin/gatb -p /usr/local/bin/test/small_test_reads.fa.gz
