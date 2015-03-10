@@ -25,7 +25,7 @@ ENV PACKAGES wget r-base-core g++ make bc zlib1g-dev bzip2 python-dev
 # (see https://github.com/ksahlin/BESST/blob/master/setup.py)
 ENV PACKAGES_BESST python-scipy python-networkx python-pip
 
-ENV TAR_GATB_VERSION 1.96
+ENV TAR_GATB_VERSION 1.97
 ENV TAR_GATB http://gatb-pipeline.gforge.inria.fr/versions/bin/gatb-pipeline-$TAR_GATB_VERSION.tar.gz
 
 # Note: can't use /tmp in DIR below with cami/interface, since /tmp is declared as VOLUME 
@@ -74,4 +74,6 @@ ENV LD_LIBRARY_PATH /root/lib/x86_64-linux-gnu/
 COPY test /dckr/etc/tasks.d/test
 COPY default /dckr/etc/tasks.d/default
 COPY Low_Complexity_Test_Dataset /dckr/etc/tasks.d/Low_Complexity_Test_Dataset
+COPY Medium_Complexity_Test_Dataset /dckr/etc/tasks.d/Medium_Complexity_Test_Dataset
+COPY High_Complexity_Test_Dataset /dckr/etc/tasks.d/High_Complexity_Test_Dataset
 
