@@ -7,7 +7,7 @@ ENV PACKAGES wget r-base-core g++ make bc zlib1g-dev bzip2 python-dev
 # (see https://github.com/ksahlin/BESST/blob/master/setup.py)
 ENV PACKAGES_BESST python-scipy python-networkx python-pip
 
-ENV TAR_GATB http://gatb-pipeline.gforge.inria.fr/versions/bin/gatb-pipeline-1.96.tar.gz
+ENV TAR_GATB http://gatb-pipeline.gforge.inria.fr/versions/bin/gatb-pipeline-1.99.tar.gz
 ENV DIR /tmp/gatb-pipeline
 
 RUN apt-get update -y && \
@@ -45,9 +45,6 @@ RUN cd ${DIR} &&\
     make && \
     mv * /usr/local/bin
 
-RUN wget http://launchpadlibrarian.net/191692691/libc6_2.15-0ubuntu10.9_amd64.deb && dpkg -x libc6_2.15-0ubuntu10.9_amd64.deb /root 
-
-ENV LD_LIBRARY_PATH /root/lib/x86_64-linux-gnu/
 
 ADD Procfile /
 ADD run /usr/local/bin/
