@@ -67,9 +67,6 @@ RUN cd ${DIR} &&\
     make && \
     mv * /usr/local/bin
 
-RUN wget http://launchpadlibrarian.net/191692691/libc6_2.15-0ubuntu10.9_amd64.deb && dpkg -x libc6_2.15-0ubuntu10.9_amd64.deb /root 
-
-ENV LD_LIBRARY_PATH /root/lib/x86_64-linux-gnu/
 
 COPY test /dckr/etc/tasks.d/test
 COPY default /dckr/etc/tasks.d/default
