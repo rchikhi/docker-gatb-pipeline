@@ -1,0 +1,21 @@
+#!/bin/bash
+echo
+echo "#####################################################################"
+echo " Running High_Complexity_Test_Dataset task..."
+echo "#####################################################################"
+echo
+echo "pwd=> `pwd`"
+SCRATCH=/dckr/mnt/output/scratchdir
+mkdir -p $SCRATCH
+cd $SCRATCH && rm -rf *
+echo "pwd=> `pwd`"
+echo
+
+#
+# Not yet ready
+#
+
+python /usr/local/bin/quast-2.3/metaquast.py assembly.fasta
+
+
+

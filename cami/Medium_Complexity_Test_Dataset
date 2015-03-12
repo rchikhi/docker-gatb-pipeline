@@ -14,3 +14,4 @@ ls -1 /dckr/mnt/input/*reads_* > list_reads
 set -xv
 /usr/local/bin/gatb -l $SCRATCH/list_reads --multik-meta
 
+python /usr/local/bin/quast-2.3/metaquast.py assembly.fasta

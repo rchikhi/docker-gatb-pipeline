@@ -25,8 +25,9 @@ ENV PACKAGES wget r-base-core g++ make bc zlib1g-dev bzip2 python-dev
 # (see https://github.com/ksahlin/BESST/blob/master/setup.py)
 ENV PACKAGES_BESST python-scipy python-networkx python-pip
 
-ENV TAR_GATB_VERSION 1.99
-ENV TAR_GATB http://gatb-pipeline.gforge.inria.fr/versions/bin/gatb-pipeline-$TAR_GATB_VERSION.tar.gz
+ENV TAR_GATB_PIPELINE_VERSION 1.99
+ENV TAR_GATB_PIPELINE http://gatb-pipeline.gforge.inria.fr/versions/bin/gatb-pipeline-$TAR_GATB_PIPELINE_VERSION.tar.gz
+ENV TAR_QUAST http://sourceforge.net/projects/quast/files/quast-2.3.tar.gz 
 
 # Note: can't use /tmp in DIR below with cami/interface, since /tmp is declared as VOLUME 
 #       (for externally mounted volumes from native host or other containers)
@@ -63,10 +64,14 @@ RUN cd ${DIR} && \
 #... Install GATB-Pipeline
 
 RUN cd ${DIR} &&\
-    wget ${TAR_GATB} -O - | tar xzf - --directory . --strip-components=1 &&\
+    wget ${TAR_GATB_PIPELINE} -O - | tar xzf - --directory . --strip-components=1 &&\
     make && \
     mv * /usr/local/bin
 
+#... Install Quast
+RUN cd ${DIR} &&\
+    wget ${TAR_QUAST} -O - | tar xzf - && \
+    mv quast-* /usr/local/bin
 
 COPY test /dckr/etc/tasks.d/test
 COPY default /dckr/etc/tasks.d/default
