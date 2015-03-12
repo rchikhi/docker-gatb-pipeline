@@ -10,7 +10,7 @@ mkdir -p $SCRATCH
 cd $SCRATCH && rm -rf *
 echo "pwd=> `pwd`"
 echo
-ls -1 /dckr/mnt/input/*reads_*
+ls -1 /dckr/mnt/input/*reads_* > list_reads
 set -xv
-/usr/local/bin/gatb -l list_reads --multik-meta
+/usr/local/bin/gatb -l $SCRATCH/list_reads --multik-meta
 
