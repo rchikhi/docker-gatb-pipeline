@@ -75,7 +75,8 @@ RUN cd ${DIR} &&\
 
 COPY test /dckr/etc/tasks.d/test
 COPY default /dckr/etc/tasks.d/default
-COPY Low_Complexity_Test_Dataset /dckr/etc/tasks.d/Low_Complexity_Test_Dataset
-COPY Medium_Complexity_Test_Dataset /dckr/etc/tasks.d/Medium_Complexity_Test_Dataset
-COPY High_Complexity_Test_Dataset /dckr/etc/tasks.d/High_Complexity_Test_Dataset
+COPY Low_Complexity_Test_Dataset                 /dckr/etc/tasks.d/Low_Complexity_Test_Dataset
+COPY Low_Complexity_Test_Dataset_merged          /dckr/etc/tasks.d/Low_Complexity_Test_Dataset_merged
+COPY Medium_Complexity_Test_Dataset              /dckr/etc/tasks.d/Medium_Complexity_Test_Dataset
+COPY High_Complexity_Test_Dataset                /dckr/etc/tasks.d/High_Complexity_Test_Dataset
 
