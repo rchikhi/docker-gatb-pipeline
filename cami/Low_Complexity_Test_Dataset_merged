@@ -1,7 +1,7 @@
 #!/bin/bash
 echo
 echo "#####################################################################"
-echo " Running Medium_Complexity_Test_Dataset task..."
+echo " Running Low_Complexity_Test_Dataset task..."
 echo "#####################################################################"
 echo
 echo "pwd=> `pwd`"
@@ -10,7 +10,7 @@ mkdir -p $SCRATCH
 cd $SCRATCH && rm -rf *
 echo "pwd=> `pwd`"
 echo
-ls -1 /dckr/mnt/input/*reads_* > list_reads
+ls -1 /dckr/mnt/input/*reads_*merged* > list_reads
 set -xv
 cat list_reads
 
