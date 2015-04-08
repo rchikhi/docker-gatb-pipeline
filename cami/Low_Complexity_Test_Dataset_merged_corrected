@@ -1,0 +1,19 @@
+#!/bin/bash
+echo
+echo "#####################################################################"
+echo " Running Low_Complexity_Test_Dataset_merged_corrected task..."
+echo "#####################################################################"
+echo
+echo "pwd=> `pwd`"
+SCRATCH=/dckr/mnt/output/scratchdir
+mkdir -p $SCRATCH
+cd $SCRATCH && rm -rf *
+echo "pwd=> `pwd`"
+echo
+echo /dckr/mnt/input/readmerged_all_corrected.fastq > list_reads
+set -xv
+cat list_reads
+
+/usr/local/bin/gatb -l $SCRATCH/list_reads --multik-meta
+
+python /usr/local/bin/quast-2.3/metaquast.py --est-ref-size 70000000 assembly.fasta
