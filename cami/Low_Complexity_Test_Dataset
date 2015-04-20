@@ -15,4 +15,4 @@ set -xv
 #/usr/local/bin/gatb -u /dckr/mnt/input/S_S001__genomes_30__insert_180_reads_anonymous.fq.gz --multik
 /usr/local/bin/gatb -u /dckr/mnt/input/S_S001__genomes_30__insert_180_reads_anonymous.fq.gz --multik-meta
 
-python /usr/local/bin/quast-2.3/metaquast.py --est-ref-size 70000000 assembly.fasta
+python /usr/local/bin/quast-2.3/metaquast.py assembly.fasta -R /dckr/mnt/input/30_genomes_refgenome.fasta.gz
