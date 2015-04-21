@@ -10,7 +10,8 @@ mkdir -p $SCRATCH
 cd $SCRATCH && rm -rf *
 echo "pwd=> `pwd`"
 echo
-echo /dckr/mnt/input/readmerged_all_corrected.fastq > list_reads
+#echo /dckr/mnt/input/readmerged_all_corrected.fastq > list_reads
+echo /dckr/mnt/input/all_correc_2000_140_2.fastq    > list_reads
 set -xv
 cat list_reads
 
