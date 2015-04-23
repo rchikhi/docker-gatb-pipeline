@@ -83,11 +83,11 @@ RUN cd ${DIR} &&\
 
 # ... Install GATB-Tools Blocoo (binary version)
 
-ENV TAR_GATB_TOOLS_BLOCOO   http://gatb-tools.gforge.inria.fr/versions/bin/Bloocoo-1.0.4-Linux.tar.gz
+ENV TAR_GATB_TOOLS_BLOCOO   http://gatb-tools.gforge.inria.fr/versions/src/Bloocoo-1.0.5-Source.tar.gz
 
 RUN cd ${DIR} &&\
     wget ${TAR_GATB_TOOLS_BLOCOO} -O - | tar xzf - --directory . --strip-components=1 &&\
-    mv bin /usr/local/bin/blocoo
+    mkdir build ; cd build; cmake ..; make -j ; cd ..; mv build/Bloocoo /usr/local/bin/; rm -rf build
 
 #... Install Quast
 
