@@ -6,6 +6,7 @@ echo "#####################################################################"
 echo
 echo "pwd=> `pwd`"
 SCRATCH=/dckr/mnt/output/scratchdir
+[ -d $SCRATCH ] && { echo "Directory $SCRATCH already exist, please remove it manually and launch this task again..." ; exit; }
 mkdir -p $SCRATCH
 cd $SCRATCH && rm -rf *
 echo "pwd=> `pwd`"

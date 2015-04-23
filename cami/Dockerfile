@@ -81,12 +81,28 @@ RUN cd ${DIR} &&\
     mv build/tools/kissreads/kissreads /usr/local/bin && \
     rm -rf *
 
+# ... Install GATB-Tools Blocoo (binary version)
+
+ENV TAR_GATB_TOOLS_BLOCOO   http://gatb-tools.gforge.inria.fr/versions/bin/Bloocoo-1.0.4-Linux.tar.gz
+
+RUN cd ${DIR} &&\
+    wget ${TAR_GATB_TOOLS_BLOCOO} -O - | tar xzf - --directory . --strip-components=1 &&\
+    mv bin /usr/local/bin/blocoo
+
 #... Install Quast
 
 RUN cd ${DIR} &&\
     wget ${TAR_QUAST} -O - | tar xzf - && \
     mv quast-* /usr/local/bin
 
+# ... Install PEAR
+
+ENV TAR_PEAR http://sco.h-its.org/exelixis/web/software/pear/files/pear-0.9.6-bin-64.tar.gz
+RUN cd ${DIR} &&\
+    wget ${TAR_PEAR} -O - | tar xzf - && \
+    mv pear-0.9.6-bin-64/pear-0.9.6-bin-64 /usr/local/bin
+
+# ... Task files
 COPY test /dckr/etc/tasks.d/test
 COPY default /dckr/etc/tasks.d/default
 COPY Low_Complexity_Test_Dataset                   /dckr/etc/tasks.d/Low_Complexity_Test_Dataset
