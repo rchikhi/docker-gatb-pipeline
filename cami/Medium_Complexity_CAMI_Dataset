@@ -44,7 +44,7 @@ INPUT_DIR=/dckr/mnt/input
 
 PAIRED_FILE_LIST_2MERGE="RM2_S001__insert_270${SMALL}.fq.gz RM2_S002__insert_270${SMALL}.fq.gz"
 
-BLOCOO_INPUT_FILE=bloocoo_input_data.fastq
+BLOOCOO_INPUT_FILE=bloocoo_input_data.fastq
 
 for PAIRED_FILE in ${PAIRED_FILE_LIST_2MERGE}; do
    PAIRED_FILE=$INPUT_DIR/$PAIRED_FILE
@@ -68,13 +68,18 @@ for PAIRED_FILE in ${PAIRED_FILE_LIST_2MERGE}; do
    FILE3=${ROOT_NAME}_merged.unassembled.reverse.fastq
 
    time_stamp
-   cat $FILE1 $FILE2 $FILE3 >> $BLOCOO_INPUT_FILE
+   cat $FILE1 $FILE2 $FILE3 >> $BLOOCOO_INPUT_FILE
 done 
 
 # ... correction (with Bloocoo)
 time_stamp
+pigz $BLOOCOO_INPUT_FILE
+cat ${BLOOCOO_INPUT_FILE}.gz $INPUT_DIR/RM1_S001__insert_5000${SMALL}.fq.gz $INPUT_DIR/RM1_S002__insert_5000${SMALL}.fq.gz >> tmp.gz
+mv tmp.gz ${BLOOCOO_INPUT_FILE}.gz
+
+time_stamp
 FILE_CORRECTED=all_correc_2000_150_2.fastq
-pipeline_correc $BLOCOO_INPUT_FILE $FILE_CORRECTED
+pipeline_correc ${BLOOCOO_INPUT_FILE}.gz $FILE_CORRECTED
 
 #######################################
 #                                     #
