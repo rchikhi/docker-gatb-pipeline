@@ -1,0 +1,98 @@
+#!/bin/bash
+echo
+echo "#####################################################################"
+echo " Running Medium_Complexity_CAMI_Dataset task..."
+echo "#####################################################################"
+echo
+echo "pwd=> `pwd`"
+SCRATCH=/dckr/mnt/output/scratchdir
+[ -d $SCRATCH ] && { echo "Directory $SCRATCH already exist, please remove it manually and launch this task again..." ; exit; }
+mkdir -p $SCRATCH
+cd $SCRATCH && rm -rf *
+echo "pwd=> `pwd`"
+echo
+set -xv
+
+# ... tools
+BLOOCOO=/usr/local/bin/Bloocoo
+PEAR=/usr/local/bin/pear-0.9.6-bin-64
+SGA_DEINTERLEAVE=/usr/local/bin/tools/sga-deinterleave.pl
+NB_CORES=`nproc`
+time_stamp() { echo "DATE `date`"; }
+
+#######################################
+#                                     #
+#          Pre-processing             #
+#                                     #
+#######################################
+
+pipeline_correc() {
+   #usage : ./pipeline_correc inputread  output
+   S1=2000; S2=150; S3=2
+   
+   #pour multi correction : correction en 3 etapes
+   #initialement (pour readmerged_all_corrected.fastq), testé avec juste la premiere ligne
+   $BLOOCOO -file $1          -abundance-min $S1 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out res1.fastq
+   $BLOOCOO -file res1.fastq  -abundance-min $S2 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out res2.fastq && rm -f res1.fastq
+   $BLOOCOO -file res2.fastq  -abundance-min $S3 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out $2         && rm -f res2.fastq
+}
+
+DEBUG=0
+[ $DEBUG -eq 1 ] && { SMALL="_small"; } || { SMALL=""; } 
+
+INPUT_DIR=/dckr/mnt/input
+
+PAIRED_FILE_LIST_2MERGE="RM2_S001__insert_270${SMALL}.fq.gz RM2_S002__insert_270${SMALL}.fq.gz"
+
+BLOCOO_INPUT_FILE=bloocoo_input_data.fastq
+
+for PAIRED_FILE in ${PAIRED_FILE_LIST_2MERGE}; do
+   PAIRED_FILE=$INPUT_DIR/$PAIRED_FILE
+   
+   [ -f $PAIRED_FILE ] || { echo "File $PAIRED_FILE not found, we exit."; exit; }
+   
+   # ... deinterleave
+   FORWARD_FILE=`basename $PAIRED_FILE .fq.gz`.1.fq
+   REVERSE_FILE=`basename $PAIRED_FILE .fq.gz`.2.fq
+   
+   time_stamp
+   perl $SGA_DEINTERLEAVE $PAIRED_FILE $FORWARD_FILE $REVERSE_FILE
+
+   # ... merge reads (with PEAR)
+   ROOT_NAME=`basename $FORWARD_FILE .1.fq`
+   
+   time_stamp
+   $PEAR -f $FORWARD_FILE -r $REVERSE_FILE -o ${ROOT_NAME}_merged -j $NB_CORES
+   FILE1=${ROOT_NAME}_merged.assembled.fastq                 
+   FILE2=${ROOT_NAME}_merged.unassembled.forward.fastq
+   FILE3=${ROOT_NAME}_merged.unassembled.reverse.fastq
+
+   time_stamp
+   cat $FILE1 $FILE2 $FILE3 >> $BLOCOO_INPUT_FILE
+done 
+
+# ... correction (with Bloocoo)
+time_stamp
+FILE_CORRECTED=all_correc_2000_150_2.fastq
+pipeline_correc $BLOCOO_INPUT_FILE $FILE_CORRECTED
+
+#######################################
+#                                     #
+#          Assembly                   #
+#                                     #
+#######################################
+
+echo $FILE_CORRECTED  > list_reads
+set -xv
+cat list_reads
+
+time_stamp
+/usr/local/bin/gatb -l $SCRATCH/list_reads --multik-meta
+
+#######################################
+#                                     #
+#         Statistics                  #
+#                                     #
+#######################################
+
+python /usr/local/bin/quast-2.3/metaquast.py assembly.fasta

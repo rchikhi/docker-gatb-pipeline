@@ -111,3 +111,5 @@ COPY Low_Complexity_Test_Dataset_merged_corrected  /dckr/etc/tasks.d/Low_Complex
 COPY Medium_Complexity_Test_Dataset                /dckr/etc/tasks.d/Medium_Complexity_Test_Dataset
 COPY High_Complexity_Test_Dataset                  /dckr/etc/tasks.d/High_Complexity_Test_Dataset
 COPY Low_Complexity_CAMI_Dataset                   /dckr/etc/tasks.d/Low_Complexity_CAMI_Dataset
+COPY Medium_Complexity_CAMI_Dataset                /dckr/etc/tasks.d/Medium_Complexity_CAMI_Dataset
+COPY High_Complexity_CAMI_Dataset                  /dckr/etc/tasks.d/High_Complexity_CAMI_Dataset
