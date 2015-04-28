@@ -16,6 +16,7 @@ set -xv
 # ... tools
 BLOOCOO=/usr/local/bin/Bloocoo
 PEAR=/usr/local/bin/pear-0.9.6-bin-64
+KISSREADS=/usr/local/bin/kissreads
 SGA_DEINTERLEAVE=/usr/local/bin/tools/sga-deinterleave.pl
 NB_CORES=`nproc`
 time_stamp() { echo "DATE `date`"; }
@@ -89,6 +90,12 @@ cat list_reads
 time_stamp
 /usr/local/bin/gatb -l $SCRATCH/list_reads --multik-meta
 
+time_stamp
+ls -ln assembly.fasta
+$KISSREADS assembly.fasta \
+     $FILE_CORRECTED \
+     -o assembly_after_kissreads.contigs.fa 
+
 #######################################
 #                                     #
 #         Statistics                  #
@@ -96,3 +103,7 @@ time_stamp
 #######################################
 
 python /usr/local/bin/quast-2.3/metaquast.py assembly.fasta
+
+python /usr/local/bin/quast-2.3/metaquast.py assembly_after_kissreads.contigs.fa
+
+
