@@ -94,6 +94,7 @@ time_stamp
 ls -ln assembly.fasta
 $KISSREADS assembly.fasta \
      $FILE_CORRECTED \
+     -O 31 -c 2 -X 91 \
      -o assembly_after_kissreads.contigs.fa 
 
 #######################################
