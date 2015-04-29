@@ -94,6 +94,13 @@ cat list_reads
 time_stamp
 /usr/local/bin/gatb -l $SCRATCH/list_reads --multik-meta
 
+time_stamp
+ls -ln assembly.fasta
+$KISSREADS assembly.fasta \
+     $FILE_CORRECTED \
+     -O 31 -c 2 -X 91 \
+     -o assembly_after_kissreads.contigs.fa
+
 #######################################
 #                                     #
 #         Statistics                  #
@@ -101,3 +108,7 @@ time_stamp
 #######################################
 
 python /usr/local/bin/quast-2.3/metaquast.py assembly.fasta
+
+python /usr/local/bin/quast-2.3/metaquast.py assembly_after_kissreads.contigs.fa
+
+
