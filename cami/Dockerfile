@@ -20,7 +20,7 @@ ENV CONT_PAIRED_FASTQ_FILE_LISTING $DCKR_MNT/input/sample.interleaved.fq.gz.list
 ENV CONT_CONTIGS_FILE $DCKR_MNT/input/contigs.fna
 
 # Note: cmake is needed by DiscoSNP++
-ENV PACKAGES wget r-base-core g++ make bc zlib1g-dev bzip2 python-dev cmake pigz
+ENV PACKAGES wget r-base-core g++ make bc zlib1g-dev bzip2 python-dev cmake pigz vim
 
 # BESST requires the following python modules: scipy, networkx, pysam, mathstats
 # (see https://github.com/ksahlin/BESST/blob/master/setup.py)
