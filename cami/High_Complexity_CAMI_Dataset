@@ -33,7 +33,7 @@ pipeline_correc() {
    
    #pour multi correction : correction en 3 etapes
    #initialement (pour readmerged_all_corrected.fastq), testé avec juste la premiere ligne
-   $BLOOCOO -file $1          -abundance-min $S1 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out res1.fastq
+   $BLOOCOO -file $1          -abundance-min $S1 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out res1.fastq && rm -f $BLOCOO_INPUT_FILE
    $BLOOCOO -file res1.fastq  -abundance-min $S2 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out res2.fastq && rm -f res1.fastq
    $BLOOCOO -file res2.fastq  -abundance-min $S3 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out $2         && rm -f res2.fastq
 }
