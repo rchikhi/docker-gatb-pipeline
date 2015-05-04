@@ -26,9 +26,10 @@ time_stamp() { echo "DATE `date`"; }
 #                                     #
 #######################################
 
+S1=300; S2=200; S3=2 # bloocoo thresholds
+
 pipeline_correc() {
    #usage : ./pipeline_correc inputread  output
-   S1=2000; S2=150; S3=2
    
    #pour multi correction : correction en 3 etapes
    #initialement (pour readmerged_all_corrected.fastq), testé avec juste la premiere ligne
@@ -64,6 +65,7 @@ cat $FILE1 $FILE2 $FILE3 > $FILE4
 
 time_stamp
 FILE_CORRECTED=all_correc_2000_150_2.fastq
+FILE_CORRECTED=all_correc_${S1}_${S2}_${S3}.fastq
 pipeline_correc $FILE4 $FILE_CORRECTED
 
 #######################################
