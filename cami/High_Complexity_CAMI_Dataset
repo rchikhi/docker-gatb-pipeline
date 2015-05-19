@@ -35,8 +35,8 @@ pipeline_correc() {
    #pour multi correction : correction en 3 etapes
    #initialement (pour readmerged_all_corrected.fastq), testé avec juste la premiere ligne
    $BLOOCOO -file $1          -abundance-min $S1 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out res1.fastq && rm -f $BLOCOO_INPUT_FILE
-   $BLOOCOO -file res1.fastq  -abundance-min $S2 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out res2.fastq && rm -f res1.fastq
-   $BLOOCOO -file res2.fastq  -abundance-min $S3 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out $2         && rm -f res2.fastq
+   $BLOOCOO -file res1.fastq  -abundance-min $S2 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out res2.fastq && rm -f res1.fastq*
+   $BLOOCOO -file res2.fastq  -abundance-min $S3 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out $2         && rm -f res2.fastq*
 }
 
 DEBUG=0
@@ -65,18 +65,21 @@ for PAIRED_FILE in ${PAIRED_FILE_LIST_2MERGE}; do
    
    time_stamp
    $PEAR -f $FORWARD_FILE -r $REVERSE_FILE -o ${ROOT_NAME}_merged -j $NB_CORES
+   rm -f $FORWARD_FILE $REVERSE_FILE
    FILE1=${ROOT_NAME}_merged.assembled.fastq                 
    FILE2=${ROOT_NAME}_merged.unassembled.forward.fastq
    FILE3=${ROOT_NAME}_merged.unassembled.reverse.fastq
 
    time_stamp
    cat $FILE1 $FILE2 $FILE3 >> $BLOCOO_INPUT_FILE
+   rm -f $FILE1 $FILE2 $FILE3
 done 
 
 # ... correction (with Bloocoo)
 time_stamp
 FILE_CORRECTED=all_correc_${S1}_${S2}_${S3}.fastq
 pipeline_correc $BLOCOO_INPUT_FILE $FILE_CORRECTED
+rm -f ${FILE_CORRECTED}.h5
 
 #######################################
 #                                     #
