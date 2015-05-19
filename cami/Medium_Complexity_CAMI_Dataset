@@ -18,6 +18,8 @@ BLOOCOO=/usr/local/bin/Bloocoo
 PEAR=/usr/local/bin/pear-0.9.6-bin-64
 KISSREADS=/usr/local/bin/kissreads
 SGA_DEINTERLEAVE=/usr/local/bin/tools/sga-deinterleave.pl
+BESST=/usr/local/bin/BESST/runBESST
+READS_TO_CTG=/usr/local/bin/BESST/scripts/reads_to_ctg_map.py
 NB_CORES=`nproc`
 time_stamp() { echo "DATE `date`"; }
 
@@ -103,6 +105,22 @@ $KISSREADS assembly.fasta \
      -O 31 -c 2 -X 91 \
      -o assembly_after_kissreads.contigs.fa
 
+# Now scaffolding
+# 1. preparing mate pair read files : deinterleave + cat both samples :
+perl $SGA_DEINTERLEAVE $INPUT_DIR/RM1_S001__insert_5000.fq.gz RM1_S001__insert_5000.1.fq RM1_S001__insert_5000.2.fq
+perl $SGA_DEINTERLEAVE $INPUT_DIR/RM1_S002__insert_5000.fq.gz RM1_S002__insert_5000.1.fq RM1_S002__insert_5000.2.fq
+
+cat RM1_S001__insert_5000.1.fq RM1_S002__insert_5000.1.fq > RM1_all__insert_5000.1.fq
+cat RM1_S001__insert_5000.2.fq RM1_S002__insert_5000.2.fq > RM1_all__insert_5000.2.fq
+
+# 2. mapping mate pairs on contigs (need bwa, should be in Path)
+python $READS_TO_CTG RM1_all__insert_5000.1.fq RM1_all__insert_5000.2.fq assembly_after_kissreads.contigs.fa all_runB_mapping
+
+# 3. scaffolding
+$runBESST -c assembly_after_kissreads.contigs.fa -f all_runB_mapping.bam -o all_noscore --orientation rf --no_score
+
+echo "result in all_noscore/BESST_output/pass1/Scaffolds_pass1.fa"
+
 #######################################
 #                                     #
 #         Statistics                  #
@@ -113,4 +131,4 @@ python /usr/local/bin/quast-2.3/metaquast.py assembly.fasta
 
 python /usr/local/bin/quast-2.3/metaquast.py assembly_after_kissreads.contigs.fa
 
-
+python /usr/local/bin/quast-2.3/metaquast.py all_noscore/BESST_output/pass1/Scaffolds_pass1.fa
