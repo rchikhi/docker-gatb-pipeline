@@ -26,7 +26,7 @@ ENV PACKAGES wget r-base-core g++ make bc zlib1g-dev bzip2 python-dev cmake pigz
 # (see https://github.com/ksahlin/BESST/blob/master/setup.py)
 ENV PACKAGES_BESST python-scipy python-networkx python-pip
 
-ENV TAR_GATB_PIPELINE_VERSION 1.99
+ENV TAR_GATB_PIPELINE_VERSION 1.121
 ENV TAR_GATB_PIPELINE http://gatb-pipeline.gforge.inria.fr/versions/bin/gatb-pipeline-$TAR_GATB_PIPELINE_VERSION.tar.gz
 
 ENV TAR_GATB_TOOLS_DISCOSNP http://gatb-tools.gforge.inria.fr/versions/src/DiscoSNP++-2.1.4-Source.tar.gz
