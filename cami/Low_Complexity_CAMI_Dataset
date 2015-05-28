@@ -39,7 +39,7 @@ pipeline_correc() {
    $BLOOCOO -file res2.fastq  -abundance-min $S3 -kmer-size 31 -slow -high-precision -nb-cores $NB_CORES -out $2         && rm -f res2.fastq
 }
 
-DEBUG=1
+DEBUG=0
 [ $DEBUG -eq 1 ] && { SMALL="_small"; } || { SMALL=""; }
 
 PAIRED_FILE=/dckr/mnt/input/RL_S001__insert_270${SMALL}.fq.gz
@@ -47,8 +47,6 @@ PAIRED_FILE=/dckr/mnt/input/RL_S001__insert_270${SMALL}.fq.gz
 [ -f $PAIRED_FILE ] || { echo "File $PAIRED_FILE not found, we exit."; exit; }
 
 # ... deinterleave
-#FORWARD_FILE=RL_S001__insert_270.1.fq
-#REVERSE_FILE=RL_S001__insert_270.2.fq
 FORWARD_FILE=`basename $PAIRED_FILE .fq.gz`.1.fq
 REVERSE_FILE=`basename $PAIRED_FILE .fq.gz`.2.fq
 
