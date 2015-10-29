@@ -107,17 +107,17 @@ $KISSREADS assembly.fasta \
 
 # Now scaffolding
 # 1. preparing mate pair read files : deinterleave + cat both samples :
-perl $SGA_DEINTERLEAVE $INPUT_DIR/RM1_S001__insert_5000.fq.gz RM1_S001__insert_5000.1.fq RM1_S001__insert_5000.2.fq
-perl $SGA_DEINTERLEAVE $INPUT_DIR/RM1_S002__insert_5000.fq.gz RM1_S002__insert_5000.1.fq RM1_S002__insert_5000.2.fq
+perl $SGA_DEINTERLEAVE $INPUT_DIR/RM1_S001__insert_5000${SMALL}.fq.gz RM1_S001__insert_5000${SMALL}.1.fq RM1_S001__insert_5000${SMALL}.2.fq
+perl $SGA_DEINTERLEAVE $INPUT_DIR/RM1_S002__insert_5000${SMALL}.fq.gz RM1_S002__insert_5000${SMALL}.1.fq RM1_S002__insert_5000${SMALL}.2.fq
 
-cat RM1_S001__insert_5000.1.fq RM1_S002__insert_5000.1.fq > RM1_all__insert_5000.1.fq
-cat RM1_S001__insert_5000.2.fq RM1_S002__insert_5000.2.fq > RM1_all__insert_5000.2.fq
+cat RM1_S001__insert_5000${SMALL}.1.fq RM1_S002__insert_5000${SMALL}.1.fq > RM1_all__insert_5000${SMALL}.1.fq
+cat RM1_S001__insert_5000${SMALL}.2.fq RM1_S002__insert_5000${SMALL}.2.fq > RM1_all__insert_5000${SMALL}.2.fq
 
 # 2. mapping mate pairs on contigs (need bwa, should be in Path)
-python $READS_TO_CTG RM1_all__insert_5000.1.fq RM1_all__insert_5000.2.fq assembly_after_kissreads.contigs.fa all_runB_mapping
+python $READS_TO_CTG RM1_all__insert_5000${SMALL}.1.fq RM1_all__insert_5000${SMALL}.2.fq assembly_after_kissreads.contigs.fa all_runB_mapping
 
 # 3. scaffolding
-$runBESST -c assembly_after_kissreads.contigs.fa -f all_runB_mapping.bam -o all_noscore --orientation rf --no_score
+$BESST -c assembly_after_kissreads.contigs.fa -f all_runB_mapping.bam -o all_noscore --orientation rf --no_score
 
 echo "result in all_noscore/BESST_output/pass1/Scaffolds_pass1.fa"
 

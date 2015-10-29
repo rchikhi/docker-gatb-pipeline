@@ -47,7 +47,7 @@ RUN rm -rf /var/lib/apt/lists/*
 #... Needed for BESST
 
 RUN pip install -i https://pypi.binstar.org/pypi/simple mathstats
-RUN pip install pysam
+RUN pip install pysam pulp
 
 RUN mkdir -p ${DIR}
 
